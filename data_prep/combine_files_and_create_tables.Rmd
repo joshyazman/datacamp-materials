@@ -1,0 +1,37 @@
+# Prep 3 Tables for Datacamp Course
+  * horserace - a set of questions asked of all respondents including who you are voting for and how likely you are to vote. 
+  * demographic - data on the age, race, gender, and education of respondents
+  * issue - a set of questions about topics and legislation that are only asked in a subset of districts
+  
+```{r}
+library(tidyverse)
+
+poll_files <- list.files('data/')
+
+polls <- list()
+for(i in poll_files){
+  polls[[i]] <- read_csv(paste0('data/',i))%>%
+    mutate(district = substring(gsub('elections-poll-|.csv','',i), 1,4),
+           poll_id = gsub('elections-poll-|.csv','',i))
+    # select(response, ager, educ, file_race, gender, race_eth, approve, genballot, hdem_fav, hrep_fav, age_combined,
+    #        educ4, file_party, gender_combined, likely, partyid, race_edu, race_eth2, region, age_combinedc,
+    #        file_race_unkother, turnout_class, phone_type, turnout_scale, turnout_score, w_LV, w_RV, final_weight)
+}
+
+all_polls <- bind_rows(polls)%>%
+  mutate(respondent_id = row_number())
+
+horserace <- all_polls%>%
+  select(respondent_id, district, poll_id, w_lv = w_LV, w_rv = w_RV, phone_type, response, trump_approve = approve, genballot, hdem_fav, hrep_fav, vote_propensity = likely)
+
+demographics <- all_polls%>%
+  select(respondent_id, district, poll_id, w_lv = w_LV, w_rv = w_RV, race_eth, gender = gender_combined, age = age_combined, education = educ4, party = file_party, region, turnout = turnout_class)
+
+issues <- all_polls%>%
+  select(respondent_id, district, poll_id, w_lv = w_LV, w_rv = w_RV, birthright_citizenship = BIRTHRIGHT, check_or_support = CHECK)
+
+# dir.create('datacamp_materials')
+write.csv(horserace, 'datacamp_materials/horserace.csv', row.names = FALSE)
+write.csv(demographics, 'datacamp_materials/demographics.csv', row.names = FALSE)
+write.csv(issues, 'datacamp_materials/issues.csv', row.names = FALSE)
+```
