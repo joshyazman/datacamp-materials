@@ -17,7 +17,7 @@ create table jyazman.horserace (
 
 copy jyazman.horserace
 from 's3://jyazman-scratch-scratch/horserace.csv' 
-credentials 'aws_access_key_id=AKIAJOJRELCRFDS7KK4Q;aws_secret_access_key=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'
+credentials 'aws_access_key_id=key;aws_secret_access_key=secret'
 delimiter ',' 
 removequotes
 ignoreheader 1
@@ -44,7 +44,7 @@ create table jyazman.demographics (
 
 copy jyazman.demographics
 from 's3://jyazman-scratch-scratch/demographics.csv' 
-credentials 'aws_access_key_id=AKIAJOJRELCRFDS7KK4Q;aws_secret_access_key=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'
+credentials 'aws_access_key_id=key;aws_secret_access_key=secret'
 delimiter ',' 
 removequotes
 ignoreheader 1
@@ -66,7 +66,7 @@ create table jyazman.issues (
 
 copy jyazman.issues
 from 's3://jyazman-scratch-scratch/issues.csv' 
-credentials 'aws_access_key_id=AKIAJOJRELCRFDS7KK4Q;aws_secret_access_key=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'
+credentials 'aws_access_key_id=key;aws_secret_access_key=secret'
 delimiter ',' 
 removequotes
 ignoreheader 1
